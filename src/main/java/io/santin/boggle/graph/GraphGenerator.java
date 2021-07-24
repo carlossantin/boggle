@@ -13,13 +13,13 @@ public class GraphGenerator {
      * @param value String to transform in a graph
      * @return A graph where each level is a character from a string
      */
-    private Node createGraphFromString(final String value) {
+    private static Node createGraphFromString(final String value) {
 
         if (value.isBlank()) {
             return new Node(true, null, null);
         }
 
-        return new Node(false, value.charAt(0), new ArrayList<>(List.of(this.createGraphFromString(value.substring(1)))));
+        return new Node(false, value.charAt(0), new ArrayList<>(List.of(createGraphFromString(value.substring(1)))));
     }
 
     /**
@@ -64,7 +64,7 @@ public class GraphGenerator {
      * @param nodes2    Second list of nodes to merge
      * @return A merged list of the first and second list
      */
-    private List<Node> mergeNodes(final List<Node> nodes1, final List<Node> nodes2) {
+    private static List<Node> mergeNodes(final List<Node> nodes1, final List<Node> nodes2) {
 
         if (nodes1.isEmpty()) return nodes2;
         if (nodes2.isEmpty()) return nodes1;
@@ -90,14 +90,14 @@ public class GraphGenerator {
      * @param strings A list of strings to create the graph
      * @return A graph where each node represents a character from string
      */
-    public List<Node> createGraphFromStrings(final List<String> strings) {
-        final List<Node> allNodes = strings.stream().map(this::createGraphFromString)
+    public static List<Node> createGraphFromStrings(final List<String> strings) {
+        final List<Node> allNodes = strings.stream().map(GraphGenerator::createGraphFromString)
                 .collect(Collectors.toList());
 
         int i = 0;
         List<Node> mergedNodes = new ArrayList<>();
         while (i < allNodes.size()) {
-            mergedNodes = this.mergeNodes(mergedNodes, List.of(allNodes.get(i)));
+            mergedNodes = mergeNodes(mergedNodes, List.of(allNodes.get(i)));
             i++;
         }
 
