@@ -1,6 +1,5 @@
 package io.santin.boggle.graph;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -17,16 +16,41 @@ public class GraphProcessor {
     public static boolean contains(final List<Node> graph,
                                    final String value) {
 
-        boolean contains = true;
+        final List<Node> nodesWithValue = getNodesWithValue(graph, value.charAt(0));
 
-        for (int i = 0; i < value.length(); i++) {
+        if (nodesWithValue.isEmpty()) return false;
 
-            final Character c = value.charAt(i);
-            final List<Node> currentLevel = getNodesAtCharacterLevel(graph, i);
-            contains = contains && currentLevel.contains(new Node(false, c, Collections.emptyList()));
-        }
+        if (value.length() == 1) return isThereALeafInNextNodes(nodesWithValue);
 
-        return contains;
+        final List<Node> nextNodes = getNextNodes(nodesWithValue);
+
+        return contains(nextNodes, value.substring(1));
+    }
+
+    /**
+     * Gets the next nodes from current ones
+     *
+     * @param currentNodes Current nodes
+     * @return the next nodes from current ones
+     */
+    private static List<Node> getNextNodes(List<Node> currentNodes) {
+        return currentNodes.stream()
+                .map(Node::getNextNodes)
+                .flatMap(List::stream)
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Checks if in the next nodes of each current node there is a leaf node
+     *
+     * @param currentNodes  Current nodes
+     * @return True if there is a leaf node in the next nodes, false otherwise
+     */
+    private static boolean isThereALeafInNextNodes(List<Node> currentNodes) {
+        return currentNodes.stream()
+                .map(Node::getNextNodes)
+                .flatMap(List::stream)
+                .anyMatch(Node::isLeaf);
     }
 
     /**
@@ -36,8 +60,8 @@ public class GraphProcessor {
      * @param level Level from graph to get all nodes
      * @return all nodes (characters) in a specific graph level
      */
-    static List<Node> getNodesAtCharacterLevel(final List<Node> graph,
-                                               final int level) {
+    public static List<Node> getNodesAtCharacterLevel(final List<Node> graph,
+                                                      final int level) {
 
         List<Node> currentLevel = graph;
 
@@ -69,6 +93,20 @@ public class GraphProcessor {
                 .map(Node::getNextNodes)
                 .flatMap(List::stream)
                 .anyMatch(Node::isLeaf);
+    }
+
+    /**
+     * Gets a list of nodes where the value is equal to a character
+     *
+     * @param graph Nodes to check
+     * @param value Character to compare with node values
+     * @return All nodes where the value is equal to a character
+     */
+    private static List<Node> getNodesWithValue(final List<Node> graph, final Character value) {
+        return graph.stream()
+                .filter(it -> it.getValue() != null)
+                .filter(it -> it.getValue().equals(value))
+                .collect(Collectors.toList());
     }
 
 }

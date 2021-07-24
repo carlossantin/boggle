@@ -15,6 +15,7 @@ public class GraphProcessorTest {
         dictionary.forEach(word -> Assertions.assertTrue(GraphProcessor.contains(graph, word)));
 
         Assertions.assertFalse(GraphProcessor.contains(graph, "camel"));
+        Assertions.assertFalse(GraphProcessor.contains(graph, "cars"));
     }
 
     @Test
