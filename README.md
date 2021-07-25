@@ -27,3 +27,8 @@ final List<String> dictionary = List.of(
 final Boggle boggle = new Boggle(dictionary, board);
 final List<String> foundWords = boggle.findWords();
 ```
+
+### Future improvements
+
+- Get the position of each word in board
+- Change method findWord in Boggle class to not use a global list of found words.
