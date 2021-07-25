@@ -1,4 +1,4 @@
-package io.santin.boogle;
+package io.santin.boggle;
 
 import java.util.ArrayList;
 import java.util.List;

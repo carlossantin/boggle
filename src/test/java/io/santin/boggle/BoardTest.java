@@ -1,5 +1,6 @@
-package io.santin.boogle;
+package io.santin.boggle;
 
+import io.santin.boggle.Board;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

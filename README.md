@@ -24,6 +24,6 @@ final List<String> dictionary = List.of(
 
 - Instantiate a board and call the method *findWords*:
 ```java
-final Boogle boogle = new Boogle(dictionary, board);
-final List<String> foundWords = boogle.findWords();
+final Boggle boggle = new Boggle(dictionary, board);
+final List<String> foundWords = boggle.findWords();
 ```

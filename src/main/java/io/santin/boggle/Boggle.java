@@ -1,5 +1,6 @@
-package io.santin.boogle;
+package io.santin.boggle;
 
+import io.santin.boggle.Board;
 import io.santin.boggle.graph.GraphGenerator;
 import io.santin.boggle.graph.GraphProcessor;
 import io.santin.boggle.graph.Node;
@@ -7,14 +8,14 @@ import io.santin.boggle.graph.Node;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Boogle {
+public class Boggle {
 
     private final Board board;
     private final int maxColumn;
     private final int maxLine;
     private final List<Node> graph;
 
-    public Boogle(final List<String> dictionary,
+    public Boggle(final List<String> dictionary,
                   final Board board) {
 
         this.board = board;
